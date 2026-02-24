@@ -1,0 +1,91 @@
+# ============================================================
+#  Air Raid Notifier – configuration
+#  Copy this file to config.yaml and fill in your values.
+# ============================================================
+
+# ---- Logging -----------------------------------------------
+# Levels: DEBUG | INFO | WARNING | ERROR
+log_level: INFO
+
+
+# ---- Alerts API --------------------------------------------
+alerts:
+  # Token from https://devs.alerts.in.ua/ (register → fill the form)
+  token: "YOUR_ALERTS_TOKEN"
+
+  # Region UID to monitor.
+  # Common UIDs (full list: https://devs.alerts.in.ua/):
+  #   4  – Вінницька область
+  #   5  – Волинська область
+  #   6  – Дніпропетровська область
+  #   7  – Донецька область
+  #   8  – Житомирська область
+  #   9  – Закарпатська область
+  #   10 – Запорізька область
+  #   11 – Івано-Франківська область
+  #   12 – Київська область
+  #   13 – Кіровоградська область
+  #   14 – Луганська область
+  #   15 – Львівська область
+  #   16 – Миколаївська область
+  #   17 – Одеська область
+  #   18 – Полтавська область
+  #   19 – Рівненська область
+  #   20 – Сумська область
+  #   21 – Тернопільська область
+  #   22 – Харківська область
+  #   23 – Херсонська область
+  #   24 – Хмельницька область
+  #   25 – Черкаська область
+  #   26 – Чернівецька область
+  #   27 – Чернігівська область
+  #   31 – м. Київ
+  region_uid: 31
+
+  # How often to poll the API (seconds).
+  # Keep >= 30 to stay well within rate limits (8-10 req/min).
+  poll_interval_seconds: 30
+
+  # Treat "partial" alerts (P) as active?  true | false
+  alert_on_partial: true
+
+
+# ---- Messengers --------------------------------------------
+messengers:
+
+  # -- Slack -------------------------------------------------
+  slack:
+    enabled: false
+
+    # User OAuth Token (starts with xoxp-).
+    # Scopes needed: users.profile:read  users.profile:write
+    # Get it at: https://api.slack.com/apps → your app → OAuth & Permissions
+    token: "xoxp-YOUR_SLACK_USER_TOKEN"
+
+    # Status shown during an alert.
+    alert_text:  "Air Raid 🚀"
+    alert_emoji: ":rotating_light:"
+
+  # -- Microsoft Teams ---------------------------------------
+  teams:
+    enabled: false
+
+    # Azure AD app registration values.
+    # See src/messengers/teams.py header for a step-by-step setup guide.
+    tenant_id:     "YOUR_TENANT_ID"
+    client_id:     "YOUR_CLIENT_ID"
+    client_secret: "YOUR_CLIENT_SECRET"
+
+    # Your Teams user Object ID (Azure AD → Users → <you> → Object ID).
+    user_id: "YOUR_USER_OBJECT_ID"
+
+    # Teams presence to set during an alert.
+    # Options: Available | Busy | DoNotDisturb | BeRightBack | Away | Offline
+    alert_presence: "DoNotDisturb"
+
+    # Status text shown during an alert.
+    alert_text: "Air Raid 🚀"
+
+    # How long (seconds) a single presence override lasts (max 3600).
+    # The app refreshes automatically, so leave this at 3600.
+    presence_ttl_seconds: 3600
